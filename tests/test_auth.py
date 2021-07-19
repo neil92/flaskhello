@@ -1,4 +1,7 @@
 import pytest
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from flask import g, session
 from flaskr.db import get_db
 
@@ -16,7 +19,7 @@ def test_register(client, app):
     ).fetchone() is not None
 
 
-@pytest.mark.parameterize(("username", "password", "message"), (
+@pytest.mark.parametrize(("username", "password", "message"), (
   ("", "", b"Username is required."),
   ("a", "", b"Password is required."),
   ("test", "test", b"already registered"),
@@ -54,4 +57,5 @@ def test_logout(client, auth):
 
   with client:
     auth.logout()
-    assert "user_id" not in sessio:
+    assert "user_id" not in session
+

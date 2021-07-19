@@ -1,7 +1,9 @@
 import os
+import sys
 import tempfile
-
 import pytest
+
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from flaskr import create_app
 from flaskr.db import get_db, init_db
 
@@ -35,7 +37,7 @@ def client(app):
 
 @pytest.fixture
 def runner(app):
-  feturn app.test_cli_runner()
+  return app.test_cli_runner()
 
 class AuthActions(object):
   def __init__(self, client):

@@ -1,6 +1,10 @@
 import sqlite3
 
 import pytest
+import sys
+import os
+
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from flaskr.db import get_db
 
 
@@ -21,8 +25,8 @@ def test_init_db_command(runner, monkeypatch):
   def fake_init_db():
     Recorder.called = True
 
-  monkeypath.setattr("flask.db.init_db", fake_init_db)
+  monkeypatch.setattr("flaskr.db.init_db", fake_init_db)
   result = runner.invoke(args=["init-db"])
-  assert "initialized" in result.output
+  assert "Initialized" in result.output
   assert Recorder.called
 
